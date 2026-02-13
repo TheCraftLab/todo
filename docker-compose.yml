@@ -1,14 +1,16 @@
 version: "3.8"
 
 services:
-  frontend:
-    build: ./frontend
-    container_name: todo-frontend
+  db:
+    image: postgres:15-alpine
+    container_name: todo-db
     restart: unless-stopped
-    ports:
-      - "80:80"
-    depends_on:
-      - backend
+    environment:
+      POSTGRES_USER: todo
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: todo
+    volumes:
+      - todo-data:/var/lib/postgresql/data
 
   backend:
     build: ./backend
@@ -21,16 +23,14 @@ services:
     depends_on:
       - db
 
-  db:
-    image: postgres:15-alpine
-    container_name: todo-db
+  frontend:
+    build: ./frontend
+    container_name: todo-frontend
     restart: unless-stopped
-    environment:
-      POSTGRES_USER: todo
-      POSTGRES_PASSWORD: password
-      POSTGRES_DB: todo
-    volumes:
-      - todo-data:/var/lib/postgresql/data
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
 
 volumes:
   todo-data:
