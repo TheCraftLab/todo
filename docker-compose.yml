@@ -2,7 +2,7 @@ version: "3.8"
 
 services:
   frontend:
-    build: /home/kevin/todo/frontend
+    build: ./frontend
     container_name: todo-frontend
     restart: unless-stopped
     ports:
@@ -11,7 +11,7 @@ services:
       - backend
 
   backend:
-    build: /home/kevin/todo/backend
+    build: ./backend
     container_name: todo-backend
     restart: unless-stopped
     environment:
