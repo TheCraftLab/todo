@@ -18,8 +18,9 @@ services:
     restart: unless-stopped
     environment:
       - DATABASE_URL=postgres://todo:password@db:5432/todo
-    ports:
-      - "3000:3000"
+      - PORT=3000
+    expose:
+      - "3000"
     depends_on:
       - db
 
